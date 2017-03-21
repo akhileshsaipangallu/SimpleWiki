@@ -9,6 +9,23 @@ from . import views
 urlpatterns = [
     url(r'^error/$', views.error, name='error'),
     url(r'^logout/$', views.logoutView, name='logout'),
+    url(r'^select-user/$', views.selectUser, name='selectUser'),
+    url(r'^create-user/$', views.createUser, name='createUser'),
+    url(
+        r'^select-user/edit-user/(?P<username>\w+)/$',
+        views.editUser,
+        name='editUser',
+    ),
+    url(
+        r'^select-user/change-password/(?P<username>\w+)/$',
+        views.changePassword,
+        name='changePassword',
+    ),
+    url(
+        r'^select-user/delete-user/(?P<username>\w+)/$',
+        views.deleteUser,
+        name='deleteUser',
+    ),
     url(
         r'^search-(?P<searchKey>\w+)/$',
         views.searchResults,

@@ -1,0 +1,33 @@
+{% extends 'wiki/base.html' %}
+
+{% block head_title %}Create User{% endblock head_title %}
+
+{% block middle_area %}
+    <div class="col-sm-6 col-sm-offset-3">
+        {% if formObj.errors %}
+            <div class="alert alert-info">
+                {% for obj in formObj %}
+                    <strong>{{ obj.errors }}</strong>
+                {% endfor %}
+            </div>
+        {% endif %}
+        <center><h2 style="margin-bottom: 30px">Create User</h2></center>
+        <form role="form" class="form-horizontal" action="" method="POST">
+            <div class="form_group">
+                {% csrf_token %}
+                {% for field in formObj %}
+                    <div class="row" style="margin-top: 10px">
+                        <label class="control-label col-sm-4">{{ field.label }} :</label>
+                        <div class="col-sm-8">
+                            {{ field }}
+                        </div>
+                    <div class="row"></div>
+                    </div>
+                {% endfor %}
+                <div class="col-sm-offset-4 col-sm-10">
+                    <button style="margin-top: 10px" type="submit" class="btn btn-success">Save Changes</button>
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock middle_area %}

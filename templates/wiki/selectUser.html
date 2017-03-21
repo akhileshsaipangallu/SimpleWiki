@@ -1,0 +1,40 @@
+{% extends 'wiki/base.html' %}
+
+{% block head_title %}Select User{% endblock head_title %}
+
+{% block style %}
+    .btn{
+        width: 135px;
+    }
+{% endblock style %}
+
+{% block middle_area %}
+    <div class="col-sm-10">
+        <div class="row">
+            <div><h1>Select User</h1></div>
+            {% for obj in userList %}
+                <div class="col-sm-12">
+                    <div class="thumbnail">
+                        <div class="caption">
+                            <h3 style="color:#337ab7">{{ obj.fullName }}</h3>
+                            <small>{{ obj.email }}</small><br><br>
+                            <a href="{% url 'editUser' obj.username %}"><button type="button" class="btn btn-success">Edit user</button></a>
+                            <a href="{% url 'changePassword' obj.username %}"><button type="button" class="btn btn-success">Change Password</button></a>
+                            <a href="{% url 'deleteUser' obj.username %}" id="demo"><button type="button" class="btn btn-success">Delete User</button></a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock middle_area %}
+
+{% block script %}
+    <!--<script>-->
+        <!--function myFunction(username) {-->
+            <!--if (confirm("Are you sure you want to delete?") == true) {-->
+                <!---->
+            <!--}-->
+        <!--}-->
+    <!--</script>-->
+{% endblock script %}

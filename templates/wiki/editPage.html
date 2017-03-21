@@ -26,10 +26,37 @@
                 {% endfor %}
                 <div class="col-sm-offset-4 col-sm-10">
                     <button style="margin: 30px 5px 0 40px" type="submit" class="btn btn-success">Save Changes</button>
-                    <button style="margin: 30px 5px 0 0" type="button" class="btn btn-success">Preview</button>
+                    <button style="margin: 30px 5px 0 0" type="button" class="btn btn-success" onClick=getValue() data-toggle="modal" data-target="#myModal">Preview</button>
                     <a href="{% url 'viewPage' postObj.title %}"><button style="margin: 30px 5px 0 0"  type="button" class="btn btn-success">Cancel</button></a>
                 </div>
             </div>
         </form>
+        <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog">
+            <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title" id="modal-title"></h4>
+                    </div>
+                    <div class="modal-body">
+                        <p id="modal-content"></p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
     </div>
 {% endblock middle_area %}
+
+{% block script %}
+    <script>
+    function getValue(){
+        document.getElementById("modal-title").innerHTML = document.getElementById("Title").value;
+        document.getElementById("modal-content").innerHTML = document.getElementById("Content").value;
+    }
+    </script>
+{% endblock script %}
