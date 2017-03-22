@@ -173,7 +173,9 @@ class CreateUserForm(forms.Form):
 
     def clean_fullName(self):
         fullName = self.cleaned_data['fullName']
-        string_validation(fullName, 'Full ')
+        pattern = re.compile(r"^([a-zA-Z\s]{1,})$")
+        if not pattern.match(fullName):
+            raise forms.ValidationError("Invalid Full Name")
         return fullName
 
     def clean_email(self):

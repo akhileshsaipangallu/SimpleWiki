@@ -6,6 +6,9 @@
     .btn{
         width: 135px;
     }
+    .btn-confirm{
+        width: 50px;
+    }
 {% endblock style %}
 
 {% block middle_area %}
@@ -18,23 +21,57 @@
                         <div class="caption">
                             <h3 style="color:#337ab7">{{ obj.fullName }}</h3>
                             <small>{{ obj.email }}</small><br><br>
-                            <a href="{% url 'editUser' obj.username %}"><button type="button" class="btn btn-success">Edit user</button></a>
-                            <a href="{% url 'changePassword' obj.username %}"><button type="button" class="btn btn-success">Change Password</button></a>
-                            <a href="{% url 'deleteUser' obj.username %}" id="demo"><button type="button" class="btn btn-success">Delete User</button></a>
+                            <a href="{% url 'editUser' obj.username %}">
+                                <button type="button" class="btn btn-success">Edit user</button>
+                            </a>
+                            <a href="{% url 'changePassword' obj.username %}">
+                                <button type="button" class="btn btn-success">Change Password</button>
+                            </a>
+                            <!-- Trigger the modal with a button -->
+                            <button type="button" class="btn btn-success deletebutton" id="" value={{ obj.username }} data-toggle="modal" data-target="#myModal">Delete User</button>
                         </div>
                     </div>
                 </div>
             {% endfor %}
         </div>
     </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Delete?</h4>
+                </div>
+                <div class="modal-body">
+                    <center><p>Are you sure you want to delete?</p></center>
+                    <br>
+                    <center>
+                        <button type="button" class="btn btn-success btn-confirm delete-confirm" data-dismiss="modal" >Yes</button>
+                        <button type="button" class="btn btn-success btn-confirm" data-dismiss="modal">No</button>
+                    </center>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 {% endblock middle_area %}
 
 {% block script %}
-    <!--<script>-->
-        <!--function myFunction(username) {-->
-            <!--if (confirm("Are you sure you want to delete?") == true) {-->
-                <!---->
-            <!--}-->
-        <!--}-->
-    <!--</script>-->
+    <script>
+        var username;
+        $(document).ready(function(){
+            $(".deletebutton").on("click",function(){
+                username=$(this).attr("value");
+            })
+            $(".delete-confirm").on("click",function(){
+                var myUrl = "{% url 'selectUser' %}"
+                myUrl = myUrl + 'delete-user/' + username
+                console.log(myUrl)
+                document.location.href = myUrl
+            })
+        })
+    </script>
 {% endblock script %}
