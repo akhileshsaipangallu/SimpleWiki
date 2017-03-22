@@ -27,7 +27,7 @@ urlpatterns = [
         name='deleteUser',
     ),
     url(
-        r'^search-(?P<searchKey>\w+)/$',
+        r'^search/(?P<searchKey>.*)/$',
         views.searchResults,
         name='searchResults',
     ),

@@ -5,10 +5,11 @@
 {% block searchBar %}
     <div class="col-lg-7 col-md-3">
         <form class="navbar-form" role="search">
+            {% csrf_token %}
             <div class="input-group" style="width:1000px">
                 <input type="text" class="form-control" placeholder="Search" name="search" id="search">
                 <div class="input-group-btn">
-                    <button class="btn btn-success" type="submit">Go</button>
+                    <button class="btn btn-success" type="submit" formmethod="post">Go</button>
                 </div>
             </div>
         </form>

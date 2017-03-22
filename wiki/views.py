@@ -141,8 +141,8 @@ def deleteUser(request, username):
 
 @login_required
 def searchResults(request, searchKey):
-    try:
-        searchKey = request.GET['search']
+    if request.method == 'POST':
+        searchKey = request.POST['search']
         return HttpResponseRedirect(
             reverse(
                 'searchResults',
@@ -151,7 +151,7 @@ def searchResults(request, searchKey):
                 }
             )
         )
-    except Exception:
+    else:
         empty = False
         searchKey = searchKey
         query_set = Post.objects.filter(title__contains=searchKey)

@@ -8,8 +8,8 @@ from wiki.models import UserProfile
 
 
 def homePage(request):
-    try:
-        searchKey = request.GET['search']
+    if request.method == 'POST':
+        searchKey = request.POST['search']
         return HttpResponseRedirect(
             reverse(
                 'searchResults',
@@ -19,7 +19,7 @@ def homePage(request):
             )
         )
 
-    except Exception:
+    else:
         searchKey = None
         userLevel = None
         if request.user.is_authenticated:
