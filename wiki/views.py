@@ -110,7 +110,6 @@ def changePassword(request, username):
         return HttpResponseRedirect(reverse('error'))
     else:
         userObj = get_object_or_404(UserProfile, username=username).user
-        username = get_object_or_404(UserProfile, username=username).username
         form = ChangePasswordForm()
 
         if request.method == 'POST':
@@ -154,11 +153,11 @@ def searchResults(request, searchKey):
     else:
         empty = False
         searchKey = searchKey
-        query_set = Post.objects.filter(title__contains=searchKey)
-        if not query_set:
+        querySet = Post.objects.filter(title__contains=searchKey)
+        if not querySet:
             empty = True
         context = {
-            'post_obj': query_set,
+            'postObj': querySet,
             'empty': empty,
             'searchKey': searchKey,
             'user': request.user,
@@ -168,22 +167,23 @@ def searchResults(request, searchKey):
 
 @login_required
 def viewPage(request, title):
+    user = request.user
     editable = False
     viewable = False
-    post_obj = get_object_or_404(Post, title=title)
-    userLevel = get_object_or_404(UserProfile, user=request.user).userLevel
+    postObj = get_object_or_404(Post, title=title)
+    userLevel = get_object_or_404(UserProfile, user=user).userLevel
 
-    if userLevel >= post_obj.viewPermissionLevel or request.user == post_obj.user:
+    if userLevel >= postObj.viewPermissionLevel or user == postObj.user:
         viewable = True
 
     if not viewable:
         return HttpResponseRedirect(reverse('error'))
-    elif userLevel >= post_obj.editPermissionLevel:
+    elif userLevel >= postObj.editPermissionLevel:
         editable = True
 
     context = {
-        'post_obj': post_obj,
-        'user': request.user,
+        'postObj': postObj,
+        'user': user,
         'editable': editable,
     }
     return render(request, 'wiki/viewPage.html', context)

@@ -6,7 +6,7 @@ from django.db import models
 from django.contrib.auth.models import User
 
 
-USER_LEVEL = [(i,i) for i in range(0, 6)]
+USERLEVEL = [(i, i) for i in range(0, 6)]
 
 
 class UserProfile(models.Model):
@@ -18,7 +18,7 @@ class UserProfile(models.Model):
     )
     fullName = models.CharField(max_length=45)
     email = models.CharField(max_length=75)
-    userLevel = models.IntegerField(choices=USER_LEVEL, default=0)
+    userLevel = models.IntegerField(choices=USERLEVEL, default=0)
     lastUpdatedBy = models.ForeignKey(
         User, null=True, blank=True, default=user
     )
@@ -35,10 +35,10 @@ class Post(models.Model):
     timestamp = models.DateTimeField(auto_now=False, auto_now_add=True)
     lastUpdated = models.DateTimeField(auto_now=True, auto_now_add=False)
     viewPermissionLevel = models.IntegerField(
-        choices=USER_LEVEL, default=0
+        choices=USERLEVEL, default=0
     )
     editPermissionLevel = models.IntegerField(
-        choices=USER_LEVEL, default=0
+        choices=USERLEVEL, default=0
     )
 
     def __unicode__(self):

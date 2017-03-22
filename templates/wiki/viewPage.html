@@ -1,19 +1,19 @@
 {% extends 'wiki/base.html' %}
 
-{% block head_title %}{{ post_obj.title }}{% endblock head_title %}
+{% block head_title %}{{ postObj.title }}{% endblock head_title %}
 
 {% block middle_area %}
     <div class="col-sm-10">
-        <h1>{{ post_obj.title }}
-        <br><small>{{ post_obj.timestamp }}</small></h1>
-        {{ post_obj.content|linebreaks }}
+        <h1>{{ postObj.title }}
+        <br><small>{{ postObj.timestamp }}</small></h1>
+        {{ postObj.content|linebreaks }}
     </div>
 {% endblock middle_area %}
 
 {% block right_side %}
     <div>
         {% if editable %}
-            <p><a href="{% url 'editPage' post_obj.title %}"><button type="button" class="btn btn-success">Edit Page</button></a></p>
+            <p><a href="{% url 'editPage' postObj.title %}"><button type="button" class="btn btn-success">Edit Page</button></a></p>
         {% endif %}
     </div>
 {% endblock right_side %}

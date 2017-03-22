@@ -10,19 +10,13 @@ from .models import Post
 from .models import UserProfile
 
 
-def string_validation(data, field_name):
-    for char in data:
-        if not char.isalpha():
-            raise forms.ValidationError(
-                "Enter a valid %s name" % field_name
-            )
-
-
 class PostForm(forms.ModelForm):
 
     class Meta:
         model = Post
-        fields = ['title', 'content', 'viewPermissionLevel', 'editPermissionLevel']
+        fields = [
+            'title', 'content', 'viewPermissionLevel', 'editPermissionLevel'
+        ]
 
     def clean_title(self):
         title = self.cleaned_data['title']
@@ -44,13 +38,9 @@ class EditPostForm(forms.ModelForm):
 
     class Meta:
         model = Post
-        fields = ['title', 'content', 'viewPermissionLevel', 'editPermissionLevel']
-
-    # def clean_title(self):
-    #     title = self.cleaned_data['title']
-    #     if Post.objects.filter(title__iexact=title).exclude():
-    #         raise forms.ValidationError("'%s' has already been taken" % title)
-    #     return title
+        fields = [
+            'title', 'content', 'viewPermissionLevel', 'editPermissionLevel'
+        ]
 
     def __init__(self, *args, **kwargs):
         super(EditPostForm, self).__init__(*args, **kwargs)
@@ -99,11 +89,11 @@ class ChangePasswordForm(forms.Form):
     )
 
     def clean_password2(self):
-        data = self.cleaned_data['password2']
-        data_password = self.cleaned_data['password1']
-        if data != data_password:
+        password2 = self.cleaned_data['password2']
+        password1 = self.cleaned_data['password1']
+        if password2 != password1:
             raise forms.ValidationError("Password mismatch")
-        return data
+        return password2
 
 
 class CreateUserForm(forms.Form):
@@ -135,7 +125,7 @@ class CreateUserForm(forms.Form):
         )
     )
     userLevel = forms.ChoiceField(
-        choices=[(x, x) for x in range(0, 5)],
+        choices=[(x, x) for x in range(0, 6)],
         widget=forms.Select(
             attrs={
                 'class': 'form-control',
@@ -164,12 +154,12 @@ class CreateUserForm(forms.Form):
     )
 
     def clean_username(self):
-        data = self.cleaned_data['username']
-        if User.objects.filter(username=data):
+        username = self.cleaned_data['username']
+        if User.objects.filter(username=username):
             raise forms.ValidationError(
-                "Username '%s' has already been taken" % data
+                "Username '%s' has already been taken" % username
             )
-        return data
+        return username
 
     def clean_fullName(self):
         fullName = self.cleaned_data['fullName']
@@ -186,8 +176,8 @@ class CreateUserForm(forms.Form):
         return email
 
     def clean_password2(self):
-        data = self.cleaned_data['password2']
-        data_password = self.cleaned_data['password1']
-        if data != data_password:
+        password2 = self.cleaned_data['password2']
+        password1 = self.cleaned_data['password1']
+        if password2 != password1:
             raise forms.ValidationError("Password mismatch")
-        return data
+        return password2
