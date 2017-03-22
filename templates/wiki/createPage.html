@@ -1,6 +1,6 @@
 {% extends 'wiki/base.html' %}
 
-{% block head_title %}Edit Page{% endblock head_title %}
+{% block head_title %}Create Page{% endblock head_title %}
 
 {% block middle_area %}
     <div class="">
@@ -11,7 +11,7 @@
                 {% endfor %}
             </div>
         {% endif %}
-        <center><h2 style="margin-bottom: 30px">Edit Page</h2></center>
+        <center><h2 style="margin-bottom: 30px">Create Page</h2></center>
         <form role="form" class="form-horizontal" action="" method="POST">
             <div class="form_group">
                 {% csrf_token %}

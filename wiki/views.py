@@ -173,7 +173,7 @@ def viewPage(request, title):
     post_obj = get_object_or_404(Post, title=title)
     userLevel = get_object_or_404(UserProfile, user=request.user).userLevel
 
-    if userLevel >= post_obj.viewPermissionLevel:
+    if userLevel >= post_obj.viewPermissionLevel or request.user == post_obj.user:
         viewable = True
 
     if not viewable:
@@ -223,6 +223,7 @@ def createPage(request, title):
 
         if formObj.is_valid():
             instance = formObj.save()
+            instance.user = request.user
             instance.save()
             return HttpResponseRedirect(
                 reverse(

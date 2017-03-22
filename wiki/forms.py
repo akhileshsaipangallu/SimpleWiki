@@ -1,3 +1,6 @@
+# standard library
+import re
+
 # Django
 from django import forms
 from django.contrib.auth.models import User
@@ -5,6 +8,14 @@ from django.contrib.auth.models import User
 # local Django
 from .models import Post
 from .models import UserProfile
+
+
+def string_validation(data, field_name):
+    for char in data:
+        if not char.isalpha():
+            raise forms.ValidationError(
+                "Enter a valid %s name" % field_name
+            )
 
 
 class PostForm(forms.ModelForm):
@@ -115,7 +126,7 @@ class CreateUserForm(forms.Form):
         )
     )
     email = forms.CharField(
-        widget=forms.TextInput(
+        widget=forms.EmailInput(
             attrs={
                 'class': 'form-control',
                 'placeholder': 'Email',
@@ -159,6 +170,18 @@ class CreateUserForm(forms.Form):
                 "Username '%s' has already been taken" % data
             )
         return data
+
+    def clean_fullName(self):
+        fullName = self.cleaned_data['fullName']
+        string_validation(fullName, 'Full ')
+        return fullName
+
+    def clean_email(self):
+        email = self.cleaned_data['email']
+        pattern = re.compile(r"^([a-zA-Z0-9.-]{1,})\@(\w{1,}\.(\w{1,}))$")
+        if not pattern.match(email):
+            raise forms.ValidationError("Invalid Email ID")
+        return email
 
     def clean_password2(self):
         data = self.cleaned_data['password2']

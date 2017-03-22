@@ -24,7 +24,6 @@ def homePage(request):
         userLevel = None
         if request.user.is_authenticated:
             userLevel = UserProfile.objects.get(user=request.user).userLevel
-        print userLevel
         context = {
             'userLevel': userLevel,
             'searchKey': searchKey,
