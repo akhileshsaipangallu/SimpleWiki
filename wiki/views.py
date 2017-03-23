@@ -17,16 +17,20 @@ from .forms import PostForm
 from .models import UserProfile
 
 
+# Access Denied page
 def error(request):
     return render(request, 'wiki/error.html')
 
 
+# Logout view, after user logged out it will automatically
+# redirects to home page
 @login_required
 def logoutView(request):
     logout(request)
     return HttpResponseRedirect(reverse('homePage'))
 
 
+# View for creating a new User, only level 5 user has access to this
 @login_required
 def createUser(request):
     userLevel = get_object_or_404(UserProfile, user=request.user).userLevel
@@ -59,6 +63,7 @@ def createUser(request):
         return render(request, 'wiki/createUser.html', context)
 
 
+# View for User list, only level 5 user has access to this
 @login_required
 def selectUser(request):
     userLevel = get_object_or_404(UserProfile, user=request.user).userLevel
@@ -72,6 +77,8 @@ def selectUser(request):
         return render(request, 'wiki/selectUser.html', context)
 
 
+# View for Editing User, only level 5 user has access to this
+# Can edit Full name, email and User Level
 @login_required
 def editUser(request, username):
     userLevel = get_object_or_404(UserProfile, user=request.user).userLevel
@@ -103,6 +110,7 @@ def editUser(request, username):
         return render(request, 'wiki/editUser.html', context)
 
 
+# View for Changing User Password, only level 5 user has access to this
 @login_required
 def changePassword(request, username):
     userLevel = get_object_or_404(UserProfile, user=request.user).userLevel
@@ -127,6 +135,7 @@ def changePassword(request, username):
         return render(request, 'wiki/changePassword.html', context)
 
 
+# View for Deleting a User, only level 5 user has access to this
 @login_required
 def deleteUser(request, username):
     userLevel = get_object_or_404(UserProfile, user=request.user).userLevel
@@ -138,6 +147,7 @@ def deleteUser(request, username):
         return HttpResponseRedirect(reverse('selectUser'))
 
 
+# View for Search results
 @login_required
 def searchResults(request, searchKey):
     if request.method == 'POST':
@@ -165,6 +175,7 @@ def searchResults(request, searchKey):
         return render(request, 'wiki/searchResults.html', context)
 
 
+# View for page details
 @login_required
 def viewPage(request, title):
     user = request.user
@@ -189,6 +200,7 @@ def viewPage(request, title):
     return render(request, 'wiki/viewPage.html', context)
 
 
+# View for Editing page details, accessible based on the View User Level field
 @login_required
 def editPage(request, title):
     postObj = get_object_or_404(Post, title=title)
@@ -216,6 +228,7 @@ def editPage(request, title):
     return render(request, 'wiki/editPage.html', context)
 
 
+# View for creating a new page/post
 @login_required
 def createPage(request, title):
     if request.method == 'POST':

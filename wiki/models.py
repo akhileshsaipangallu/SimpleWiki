@@ -9,6 +9,7 @@ from django.contrib.auth.models import User
 USERLEVEL = [(i, i) for i in range(0, 6)]
 
 
+# Custom UserProfile DB which has a foreignkey relation with Django User
 class UserProfile(models.Model):
     user = models.ForeignKey(
         User, null=True, blank=True, related_name='user_name'
@@ -28,6 +29,7 @@ class UserProfile(models.Model):
         return self.fullName
 
 
+# DB to store page details
 class Post(models.Model):
     user = models.ForeignKey(User, null=True, blank=True)
     title = models.CharField(max_length=120, unique=True)

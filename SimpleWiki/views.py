@@ -7,6 +7,7 @@ from django.shortcuts import reverse
 from wiki.models import UserProfile
 
 
+# home page view with search bar
 def homePage(request):
     if request.method == 'POST':
         searchKey = request.POST['search']

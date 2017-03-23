@@ -10,6 +10,8 @@ from .models import Post
 from .models import UserProfile
 
 
+# form to create a page, can add Title, Content, View Permission Level and
+# Edit Permission Level. Title should be unique
 class PostForm(forms.ModelForm):
 
     class Meta:
@@ -34,6 +36,8 @@ class PostForm(forms.ModelForm):
             self.fields[key].widget.attrs['id'] = self.fields[key].label
 
 
+# form to edit a page, can edit Title, Content, View Permission Level and
+# Edit Permission Level. Title should be unique
 class EditPostForm(forms.ModelForm):
 
     class Meta:
@@ -52,6 +56,7 @@ class EditPostForm(forms.ModelForm):
             self.fields[key].widget.attrs['id'] = self.fields[key].label
 
 
+# form to edit User details, can edit Full Name, Email and User Level
 class EditUserForm(forms.ModelForm):
 
     class Meta:
@@ -68,6 +73,7 @@ class EditUserForm(forms.ModelForm):
             self.fields[key].widget.attrs['id'] = self.fields[key].label
 
 
+# form to change User password
 class ChangePasswordForm(forms.Form):
     password1 = forms.CharField(
         widget=forms.PasswordInput(
@@ -96,6 +102,8 @@ class ChangePasswordForm(forms.Form):
         return password2
 
 
+# form to create a new User with username, Full Name, Email, User Level
+# and Password
 class CreateUserForm(forms.Form):
     username = forms.CharField(
         widget=forms.TextInput(
