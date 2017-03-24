@@ -19,21 +19,40 @@ class PostForm(forms.ModelForm):
         fields = [
             'title', 'content', 'viewPermissionLevel', 'editPermissionLevel'
         ]
+        widgets = {
+            'title': forms.TextInput(
+                attrs={
+                    'class': 'form-control',
+                    'placeholder': 'Title',
+                    'id': 'title',
+                }
+            ),
+            'content': forms.Textarea(
+                attrs={
+                    'class': 'form-control',
+                    'placeholder': 'Enter content here',
+                    'id': 'content',
+                }
+            ),
+            'viewPermissionLevel': forms.Select(
+                attrs={
+                    'class': 'form-control',
+                    'id': 'viewPermissionLevel',
+                }
+            ),
+            'editPermissionLevel': forms.Select(
+                attrs={
+                    'class': 'form-control',
+                    'id': 'editPermissionLevel',
+                }
+            ),
+        }
 
     def clean_title(self):
         title = self.cleaned_data['title']
         if Post.objects.filter(title__iexact=title):
             raise forms.ValidationError("'%s' has already been taken" % title)
         return title
-
-    def __init__(self, *args, **kwargs):
-        super(PostForm, self).__init__(*args, **kwargs)
-
-        for key in self.fields:
-            self.fields[key].widget.attrs['class'] = 'form-control'
-            self.fields[key].widget.attrs['placeholder'] = \
-                self.fields[key].label
-            self.fields[key].widget.attrs['id'] = self.fields[key].label
 
 
 # form to edit a page, can edit Title, Content, View Permission Level and
@@ -45,15 +64,34 @@ class EditPostForm(forms.ModelForm):
         fields = [
             'title', 'content', 'viewPermissionLevel', 'editPermissionLevel'
         ]
-
-    def __init__(self, *args, **kwargs):
-        super(EditPostForm, self).__init__(*args, **kwargs)
-
-        for key in self.fields:
-            self.fields[key].widget.attrs['class'] = 'form-control'
-            self.fields[key].widget.attrs['placeholder'] = \
-                self.fields[key].label
-            self.fields[key].widget.attrs['id'] = self.fields[key].label
+        widgets = {
+            'title': forms.TextInput(
+                attrs={
+                    'class': 'form-control',
+                    'placeholder': 'Title',
+                    'id': 'title',
+                }
+            ),
+            'content': forms.Textarea(
+                attrs={
+                    'class': 'form-control',
+                    'placeholder': 'Enter content here',
+                    'id': 'content',
+                }
+            ),
+            'viewPermissionLevel': forms.Select(
+                attrs={
+                    'class': 'form-control',
+                    'id': 'viewPermissionLevel',
+                }
+            ),
+            'editPermissionLevel': forms.Select(
+                attrs={
+                    'class': 'form-control',
+                    'id': 'editPermissionLevel',
+                }
+            ),
+        }
 
 
 # form to edit User details, can edit Full Name, Email and User Level
@@ -62,15 +100,28 @@ class EditUserForm(forms.ModelForm):
     class Meta:
         model = UserProfile
         fields = ['fullName', 'email', 'userLevel']
-
-    def __init__(self, *args, **kwargs):
-        super(EditUserForm, self).__init__(*args, **kwargs)
-
-        for key in self.fields:
-            self.fields[key].widget.attrs['class'] = 'form-control'
-            self.fields[key].widget.attrs['placeholder'] = \
-                self.fields[key].label
-            self.fields[key].widget.attrs['id'] = self.fields[key].label
+        widgets = {
+            'fullName': forms.TextInput(
+                attrs={
+                    'class': 'form-control',
+                    'placeholder': 'Full Name',
+                    'id': 'fullName',
+                }
+            ),
+            'email': forms.TextInput(
+                attrs={
+                    'class': 'form-control',
+                    'placeholder': 'email',
+                    'id': 'email',
+                }
+            ),
+            'userLevel': forms.Select(
+                attrs={
+                    'class': 'form-control',
+                    'id': 'userLevel',
+                }
+            ),
+        }
 
 
 # form to change User password

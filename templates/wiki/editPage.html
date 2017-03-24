@@ -7,7 +7,7 @@
         {% if formObj.errors %}
             <div class="alert alert-info">
                 {% for obj in formObj %}
-                    <strong>{{ obj.errors }}</strong>
+                <strong><center>{{ obj.errors }}</center></strong>
                 {% endfor %}
             </div>
         {% endif %}
@@ -55,8 +55,8 @@
 {% block script %}
     <script>
     function getValue(){
-        document.getElementById("modal-title").innerHTML = document.getElementById("Title").value;
-        document.getElementById("modal-content").innerHTML = document.getElementById("Content").value;
+        document.getElementById("modal-title").innerHTML = document.getElementById("title").value;
+        document.getElementById("modal-content").innerHTML = document.getElementById("content").value;
     }
     </script>
 {% endblock script %}
